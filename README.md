@@ -1,4 +1,4 @@
 FBTiles
 =======
 
-.. stay tuned.
+.. stay tuned for more from ForeFlight.
