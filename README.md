@@ -8,10 +8,12 @@ Overview
 
 The Flight Bag Tiles ("FBTiles") database format is an open database
 specification invented by [ForeFlight](http://www.foreflight.com) for packaging
-geo-referenced chart tiles in SQLite databases  for use in mobile, desktop, and
-web applications. The FBTiles specification is free for app makers, website
-developers, and national Aeronautical Information Publishers ("AIPs") to use in
-order to accelerate digital charting initiatives.
+geo-referenced chart tiles in SQLite databases within the
+[ForeFlight App](https://itunes.apple.com/us/app/foreflight-mobile/id333252638?mt=8)
+but also for use in other mobile, desktop, and web applications. The FBTiles
+specification is free for app makers, website developers, and national
+Aeronautical Information Publishers ("AIPs") to use in order to accelerate
+digital charting initiatives.
 
 
 Database Specification
@@ -166,7 +168,8 @@ Versions
 References
 ----------
 
- * [ForeFlight](http://www.foreflight.com)
+ * [ForeFlight App](https://itunes.apple.com/us/app/foreflight-mobile/id333252638?mt=8)
+ * [ForeFlight (company website)](http://www.foreflight.com)
  * [MBTiles](http://www.mbtiles.org)
  * [MapBox](http://www.mapbox.com)
  * [Creative Commons Attribution 3.0 United States
