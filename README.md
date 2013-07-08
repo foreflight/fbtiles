@@ -1,4 +1,3 @@
-![](images/logo.png)
 
 Flight Bag Tiles
 ================
