@@ -44,7 +44,7 @@ above, the chart legends are stored as collared data, to be turned on or off as
 legend data in the application.
 
 The possibilities really are limitless; you could have the original map tiles
-appear and then have a secondary set of tiles stored in the tile\_collar\_data
+appear and then have a secondary set of tiles stored in the tile_collar_data
 column that are like the original, completely different, or with additional markup.
 
 In future versions of FBTiles these general concepts may be further enhanced to
@@ -102,13 +102,13 @@ CREATE INDEX tiles_zoom_idx ON tiles(zoom_level);
 
  * Tiles Table
     + `tilekey`: unique integer
-    + `zoom\_level`: integer values from `0` (highest) - `17` (lowest) zoom
-    + `tile\_row`: row or X-value for tile
-    + `tile\_column`: column or Y-value for tile
-    + `tile\_data`: BLOB for image data (no format assumed)
-    + `tile\_datatypes\_id`: refers to format of BLOB in separate table
-    + `tile\_collar\_data`: BLOB for collared image data (no format assumed)
-    + `tile\_collar\_datatypes\_id`: refers to format of BLOB in separate table
+    + `zoom_level`: integer values from `0` (highest) - `17` (lowest) zoom
+    + `tile_row`: row or X-value for tile
+    + `tile_column`: column or Y-value for tile
+    + `tile_data`: BLOB for image data (no format assumed)
+    + `tile_datatypes_id`: refers to format of BLOB in separate table
+    + `tile_collar_data`: BLOB for collared image data (no format assumed)
+    + `tile_collar_datatypes_id`: refers to format of BLOB in separate table
  * Bounds Table
     + `zoom`: zoom levels are integer values `0-17`
     + `collared`: `0` or `1`, corresponding to True/False, collared or not
@@ -120,8 +120,8 @@ CREATE INDEX tiles_zoom_idx ON tiles(zoom_level);
     + `id`: unique integer
     + `datatype`: unique text for image format (either `PNG`, or `JPG`)
 
-While the specification is open-ended enough to allow for `tile\_data` or
-`tile\_collar\_data` to contain any type of image format, at this point in time
+While the specification is open-ended enough to allow for `tile_data` or
+`tile_collar_data` to contain any type of image format, at this point in time
 only `PNG` or `JPG` will be recognized and supported within ForeFlight's use of
 FBTiles spec.
 
