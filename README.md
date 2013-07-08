@@ -129,7 +129,7 @@ FBTiles spec.
 Examples
 --------
 
-** Examples and source code will be coming shortly. **
+**Examples and source code will be coming shortly.**
 
 <!-- Included in this repository are a number of examples using Python to construct
 an FBTiles dataset as a SQLite file. -->
