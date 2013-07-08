@@ -29,7 +29,8 @@ relates to additional/alternate tiles that appear around the edges of the
 original tiles found in the 'tiles' table.
 
 
-### Collared Data Concept Explained
+Collared Data Concept Explained
+-------------------------------
 
 ![Collared Tiles Example](images/collared.png)\
 
@@ -47,11 +48,12 @@ column that are like the original, completely different, or with additional mark
 In future versions of FBTiles these general concepts may be further enhanced to
 allow for effecient delivery of multiple tile versions and formats.
 
-### Table and Index Creation
+Tables
+------
 
 Initial steps towards creating your own data in the FBTiles format involves
-creating three new tables, bounds, datatypes, and tiles. In addition to these
-three tables are the corresponding indexes that may be of use in your
+creating three new tables: `bounds`, `datatypes`, and `tiles`. In addition to
+these three tables are the corresponding indexes that may be of use in your
 application as well, but are specifically tailored to meet the requirements for
 ForeFlight's application if you intend on using your FBTiles therein.
 
@@ -59,7 +61,14 @@ Additionally, while the basic SQL is database agnostic, for compatibility with
 ForeFlight, you should adhere to SQLite (as shown below) as you will be
 required to upload SQLite files for use within ForeFlight.
 
-*Bounds Table*
+
+###Bounds Table
+
+This table is used to specify the minimum/maximum X (column) values and
+minimum/maximum Y (row) values for a given pair of Zoom and Collared queries.
+This table aids in efficient lookups, and is used by the ForeFlight
+application.
+
 ```sql
 CREATE TABLE bounds (zoom INTEGER,
                      collared INTEGER,
@@ -70,7 +79,25 @@ CREATE TABLE bounds (zoom INTEGER,
                      PRIMARY KEY (zoom, collared));
 ```
 
-*Data Types Table*
+Columns:
+
+ * `zoom`: zoom levels are integer values `0-17`
+ * `collared`: `0` or `1`, corresponding to True/False, collared or not
+ * `maxX`: maximum X value for zoom-collared key pair.
+ * `maxY`: maximum Y value for zoom-collared key pair.
+ * `minX`: minimum X value for zoom-collared key pair.
+ * `minY`: minimum Y value for zoom-collared key pair.
+
+
+###Data Types Table
+
+This table specifies what the format of the tile BLOB columns in the `tiles`
+table represent.  While the specification is open-ended enough to allow for
+`tile_data` or `tile_collar_data` to contain any type of image format, at this
+point in time only `PNG` or `JPG` will be recognized and supported within
+ForeFlight's use of FBTiles spec.
+
+
 ```sql
 CREATE TABLE [datatypes] (id INTEGER PRIMARY KEY,
                           datatype TEXT UNIQUE);
@@ -78,7 +105,17 @@ CREATE TABLE [datatypes] (id INTEGER PRIMARY KEY,
 CREATE INDEX datatypes_idx ON datatypes(datatype);
 ```
 
-*Tiles Table*
+Columns:
+
+ * `id`: unique integer
+ * `datatype`: unique text for image format (either `PNG`, or `JPG`)
+
+
+###Tiles Table
+
+The `tiles` table associates the BLOB data to the row, column, zoom levels
+necessary for efficient retrieval from within an application.
+
 ```sql
 CREATE TABLE tiles  (tilekey INTEGER PRIMARY KEY,
                      zoom_level INTEGER,
@@ -98,38 +135,23 @@ CREATE INDEX tiles_idx ON tiles(zoom_level,
 CREATE INDEX tiles_zoom_idx ON tiles(zoom_level);
 ```
 
-### Columns
+Columns:
 
- * Tiles Table
-    + `tilekey`: unique integer
-    + `zoom_level`: integer values from `0` (highest) - `17` (lowest) zoom
-    + `tile_row`: row or X-value for tile
-    + `tile_column`: column or Y-value for tile
-    + `tile_data`: BLOB for image data (no format assumed)
-    + `tile_datatypes_id`: refers to format of BLOB in separate table
-    + `tile_collar_data`: BLOB for collared image data (no format assumed)
-    + `tile_collar_datatypes_id`: refers to format of BLOB in separate table
- * Bounds Table
-    + `zoom`: zoom levels are integer values `0-17`
-    + `collared`: `0` or `1`, corresponding to True/False, collared or not
-    + `maxX`: maximum X value for zoom-collared key pair.
-    + `maxY`: maximum Y value for zoom-collared key pair.
-    + `minX`: minimum X value for zoom-collared key pair.
-    + `minY`: minimum Y value for zoom-collared key pair.
- * Data Types Table
-    + `id`: unique integer
-    + `datatype`: unique text for image format (either `PNG`, or `JPG`)
+ * `tilekey`: unique integer
+ * `zoom_level`: integer values from `0` (highest) - `17` (lowest) zoom
+ * `tile_row`: row or Y-value for tile
+ * `tile_column`: column or X-value for tile
+ * `tile_data`: BLOB for image data (no format assumed)
+ * `tile_datatypes_id`: refers to format of BLOB in separate table
+ * `tile_collar_data`: BLOB for collared image data (no format assumed)
+ * `tile_collar_datatypes_id`: refers to format of BLOB in separate table
 
-While the specification is open-ended enough to allow for `tile_data` or
-`tile_collar_data` to contain any type of image format, at this point in time
-only `PNG` or `JPG` will be recognized and supported within ForeFlight's use of
-FBTiles spec.
 
 
 Examples
 --------
 
-**Examples and source code will be coming shortly.**
+*Examples and source code will be coming shortly.*
 
 <!-- Included in this repository are a number of examples using Python to construct
 an FBTiles dataset as a SQLite file. -->
