@@ -5,10 +5,12 @@ import sys
 import unittest
 
 
-from .. fbtiles import FBTiles
-
-
 CWD = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, CWD)
+sys.path.insert(0, os.path.join(CWD,'..'))
+sys.path.insert(0, os.path.join(CWD,'..','..'))
+
+from fbtiles import FBTiles
 
 
 class FBTilesTestCase(unittest.TestCase):
@@ -44,7 +46,7 @@ class FBTilesTestCase(unittest.TestCase):
         '''
         fbt = FBTiles(self.db_abspath, connect=True)
         where = { 'x': 293, 'y': 200, 'z': 7 }
-        tile_fn = 'tile.jpg'
+        tile_fn = os.path.join(CWD,'tile.jpg')
         fbt.add_tile(tile_fn, where['x'], where['y'], where['z'])
         fbt.close()
 
@@ -77,7 +79,7 @@ class FBTilesTestCase(unittest.TestCase):
         ''' Verify you can't add same tile multiple times. '''
         fbt = FBTiles(self.db_abspath, connect=True)
         where = { 'x': 293, 'y': 200, 'z': 7 }
-        tile_fn = 'tile.jpg'
+        tile_fn = os.path.join(CWD,'tile.jpg')
         # attempt to add the same tile (same x, y, z) multiple times
         fbt.add_tile(tile_fn, where['x'], where['y'], where['z'])
         fbt.add_tile(tile_fn, where['x'], where['y'], where['z'])
@@ -113,7 +115,7 @@ class FBTilesTestCase(unittest.TestCase):
             },
         }
         fbt = FBTiles(self.db_abspath, connect=True)
-        tile_fn = 'tile.jpg' # reuse same blob each time; doesn't matter
+        tile_fn = os.path.join(CWD,'tile.jpg')
         for z,zdata in bounds.iteritems():
             for i in range(0,7):
                 fbt.add_tile(tile_fn, zdata['x'][i], zdata['y'][i], z)
@@ -138,7 +140,6 @@ class FBTilesTestCase(unittest.TestCase):
                         FROM bounds WHERE zoom=? AND collared=?""",
                         (z, 0))
             row = cur.fetchone()
-            print 'test row =', row
             self.assertEqual(min(bounds[z]['x']), row[0])
             self.assertEqual(max(bounds[z]['x']), row[1])
             self.assertEqual(min(bounds[z]['y']), row[2])
@@ -151,7 +152,7 @@ class FBTilesTestCase(unittest.TestCase):
         '''
         fbt = FBTiles(self.db_abspath, connect=True)
         where = { 'x': 293, 'y': 200, 'z': 7 }
-        tile_fn = 'tile.jpg'
+        tile_fn = os.path.join(CWD,'tile.jpg')
         fbt.add_tile(tile_fn, where['x'], where['y'], where['z'])
         fbt.add_tile(tile_fn, where['x'], where['y'], where['z'],collared=True)
         fbt.close()
@@ -172,3 +173,7 @@ class FBTilesTestCase(unittest.TestCase):
         cur.execute("SELECT * FROM bounds")
         rows = cur.fetchall()
         self.assertEqual(len(rows), 2)      # two bounds rows, however
+
+
+if __name__ == '__main__':
+    unittest.main()

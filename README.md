@@ -126,10 +126,98 @@ FBTiles spec.
 Examples
 --------
 
-**Examples and source code will be coming shortly.**
+ * Requirements:
+    + [Python 2.7+](http://python.org/download/)
+ * Optional
+    + [SQLite3](http://www.sqlite.org/download.html)
 
-<!-- Included in this repository are a number of examples using Python to construct
-an FBTiles dataset as a SQLite file. -->
+Included in this repository is an `examples` directory that currently contains
+example code in Python that demonstrate how to create a basic FBTiles dataset.
+The basic example, `examples/example1.py` refers to a `FBTiles` class found in
+`examples/fbtiles.py`. This core class demonstrates how to create the initial
+database schema, and also provides an example of the tasks associated with
+adding a tile in the `FBTiles.add_tile()` method.
+
+```python
+    def add_tile(self, tile_filename, x, y, z, collared=False):
+        [...]
+```
+
+If you are familiar with Python, or running things from the command line the
+next steps will be familiar. These steps assume  you have access to a Unix
+terminal, such as you would find on Mac OS X, or Linux environments although it
+is certainly possible to execute these examples under other platforms such as
+Windows. Python is a widely supported and the examples here are portable
+assuming you have the minimum supported Python version.
+
+### Running Python Example-1
+
+Example 1 simply adds two versions of a tile at a single position to an FBTiles
+dataset. The regular version is added and then the collared version.
+
+To run the example, open a terminal to this repository directory (wherever you
+have cloned it into).  Step into the examples directory with `cd examples`.
+You'll then execute the example1.py script using the python interpretor `python
+example1.py`, and if all goes well, you will see messages stating that the
+dataset `example1.fbtiles` was created.
+
+```bash
+$ cd examples
+$ python example1.py
+connecting to: example1.fbtiles
+creating schema
+closing database: example1.fbtiles
+Created example1.fbtiles
+```
+
+Afterwards, if you have installed the optional SQLite3 programs, and are
+familiar with SQL, you can inspect the contents of the dataset.
+
+```bash
+$ sqlite3 example1.fbtiles
+SQLite version 3.7.12 2012-04-03 19:43:07
+Enter ".help" for instructions
+Enter SQL statements terminated with a ";"
+sqlite> select * from tiles;
+536870913|0|2|1|����|1|����|1
+```
+
+### Running Python Tests
+
+Within the `examples` directory is a `tests` directory that contains a test
+script `fbtiles_test.py`. Following on the steps we already discussed for
+running the example, you can simply type the following from a terminal if you
+are within the `examples` directory. You should see something similar to the
+output shown below with paths that are relative to your project.
+
+```bash
+$ python tests/fbtiles_test.py
+connecting to: /Users/joe/fbtiles/examples/tests/test.db
+creating schema
+closing database: /Users/joe/fbtiles/examples/tests/test.db
+.connecting to: /Users/joe/fbtiles/examples/tests/test.db
+creating schema
+closing database: /Users/joe/fbtiles/examples/tests/test.db
+.connecting to: /Users/joe/fbtiles/examples/tests/test.db
+creating schema
+closing database: /Users/joe/fbtiles/examples/tests/test.db
+.connecting to: /Users/joe/fbtiles/examples/tests/test.db
+creating schema
+closing database: /Users/joe/fbtiles/examples/tests/test.db
+.connecting to: /Users/joe/fbtiles/examples/tests/test.db
+creating schema
+closing database: /Users/joe/fbtiles/examples/tests/test.db
+.
+----------------------------------------------------------------------
+Ran 5 tests in 0.083s
+
+OK
+```
+
+If you open `examples/tests/fbtiles_test.py` you'll find additional examples,
+although from a testing point of view, of how to use the included FBTiles
+object and what might be the expected behavior in odd situations (e.g. What's
+the correct behavior if I add the same tile twice?).
 
 
 Versions
