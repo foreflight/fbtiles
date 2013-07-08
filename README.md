@@ -59,6 +59,7 @@ Additionally, while the basic SQL is database agnostic, for compatibility with
 ForeFlight, you should adhere to SQLite (as shown below) as you will be
 required to upload SQLite files for use within ForeFlight.
 
+*Bounds Table*
 ```sql
 CREATE TABLE bounds (zoom INTEGER,
                      collared INTEGER,
@@ -69,6 +70,7 @@ CREATE TABLE bounds (zoom INTEGER,
                      PRIMARY KEY (zoom, collared));
 ```
 
+*Data Types Table*
 ```sql
 CREATE TABLE [datatypes] (id INTEGER PRIMARY KEY,
                           datatype TEXT UNIQUE);
@@ -76,6 +78,7 @@ CREATE TABLE [datatypes] (id INTEGER PRIMARY KEY,
 CREATE INDEX datatypes_idx ON datatypes(datatype);
 ```
 
+*Tiles Table*
 ```sql
 CREATE TABLE tiles  (tilekey INTEGER PRIMARY KEY,
                      zoom_level INTEGER,
