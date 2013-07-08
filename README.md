@@ -14,9 +14,6 @@ web applications. The FBTiles specification is free for app makers, website
 developers, and national Aeronautical Information Publishers ("AIPs") to use in
 order to accelerate digital charting initiatives.
 
-must implement the specification below to
-ensure compatibility with devices.
-
 
 Database Specification
 ----------------------
