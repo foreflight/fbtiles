@@ -86,7 +86,7 @@ CREATE TABLE tiles  (tilekey INTEGER PRIMARY KEY,
                      tile_collar_data BLOB,
                      tile_collar_datatypes_id INTEGER,
         FOREIGN KEY (tile_datatypes_id) REFERENCES datatypes(id),
-        FOREIGN KEY (tile_collar_datatypes_id) REFERENCES kdatatypes(id));
+        FOREIGN KEY (tile_collar_datatypes_id) REFERENCES datatypes(id));
 
 CREATE INDEX tiles_idx ON tiles(zoom_level,
                                 tile_row,
